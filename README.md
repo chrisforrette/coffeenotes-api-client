@@ -1,1 +1,1 @@
-# coffeenotes-api-client
+# Coffee Notes API Client
