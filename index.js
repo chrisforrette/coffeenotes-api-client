@@ -1,8 +1,10 @@
-import qs from 'querystring'
+import { stringify } from 'querystring'
 import 'fetch-everywhere'
 import curry from 'curry'
 
-let API_URL = 'https://api.coffeenot.es'
+const { NODE_ENV } = process.env
+
+let API_URL = NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://api.coffeenot.es'
 let AUTH_TOKEN
 
 export const getApiURL = () => API_URL
@@ -27,7 +29,7 @@ const defaultOptions = {
 export const getRequestOptions = (options = {}, parameters = {}) => {
   const requestOptions = {
     ...defaultOptions,
-    options
+    ...options
   }
 
   if (AUTH_TOKEN) {
@@ -52,12 +54,16 @@ export const handleResponse = async response => {
   throw error
 }
 
-export const request = curry(async (options = {}, endpoint, parameters = {}) => {
+export const request = curry(async (options, endpoint, parameters) => {
+  options = options || {}
+  parameters = parameters || {}
+  console.trace()
+  console.log('request', options, endpoint, parameters)
   const url = `${API_URL}/${endpoint}`
   const requestOptions = getRequestOptions(options, parameters)
   const querystringParams = requestOptions.method === 'GET' ? parameters : null
 
-  const querystring = qs.stringify(querystringParams)
+  const querystring = stringify(querystringParams)
 
   const response = await global.fetch(
     `${url}${querystring ? `?${querystring}` : ''}`,
@@ -76,8 +82,8 @@ export const update = request({ method: 'PUT' })
  * @type {Object}
  */
 export const logs = {
-  list: qs => get('logs', qs),
-  create: data => create('logs', data)
+  list: get('logs'),
+  create: create('logs')
 }
 
 /**
@@ -85,9 +91,9 @@ export const logs = {
  * @type {Object}
  */
 export const users = {
-  register: data => create('users/register', data),
-  login: data => create('users/token', data),
-  loginFacebook: data => create('users/token/facebook', data)
+  register: create('users/register'),
+  login: create('users/token'),
+  loginFacebook: create('users/token/facebook')
 }
 
 /**
@@ -95,7 +101,7 @@ export const users = {
  * @type {Object}
  */
 export const drinks = {
-  list: qs => get('drinks', qs)
+  list: get('drinks')
 }
 
 /**
@@ -103,5 +109,5 @@ export const drinks = {
  * @type {Object}
  */
 export const beans = {
-  list: qs => get('beans', qs)
+  list: get('beans')
 }

@@ -1,0 +1,17 @@
+{
+  "plugins": [
+    ["@babel/plugin-proposal-object-rest-spread", {
+      "loose": true,
+      "useBuiltIns": true
+    }]
+  ],
+  "presets": [
+    ["@babel/preset-env", {
+      "targets": {
+        "node": "8",
+        "browsers": ["last 2 versions"]
+      },
+      "modules": false
+    }]
+  ]
+}
