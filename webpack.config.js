@@ -2,14 +2,16 @@ const path = require('path')
 
 const { NODE_ENV = 'development' } = process.env
 
+const OUTPUT_PATH = path.resolve(__dirname, 'dist')
+
 module.exports = {
   mode: NODE_ENV,
   entry: './index.js',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: OUTPUT_PATH,
     filename: 'index.js',
-    library: 'coffeenotes'
-    // libraryTarget: 'umd'
+    library: 'coffeenotes',
+    libraryTarget: 'umd'
   },
   module: {
     rules: [{
