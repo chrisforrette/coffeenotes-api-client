@@ -2,13 +2,15 @@
   "name": "@coffeenotes/api-client",
   "version": "0.1.0",
   "description": "Coffee Notes API client",
-  "main": "dist/index.js",
-  "module": "index.js",
+  "main": "dist/cjs.js",
+  "module": "dist/es.js",
   "scripts": {
-    "build": "webpack",
+    "build:cjs": "",
+    "build:es": "",
+    "build": "rollup -c",
     "lint": "standard | snazzy",
     "test": "jest",
-    "watch": "webpack --watch"
+    "watch": "NODE_ENV=development rollup -c -w"
   },
   "repository": {
     "type": "git",
@@ -28,15 +30,18 @@
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/runtime": "^7.1.2",
-    "babel-loader": "^8.0.4",
     "jest": "^23.6.0",
+    "rollup": "^0.66.6",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-json": "^3.1.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-replace": "^2.1.0",
+    "rollup-plugin-uglify": "^6.0.0",
     "snazzy": "^7.1.1",
-    "standard": "^11.0.1",
-    "webpack": "^4.22.0",
-    "webpack-cli": "^3.1.2"
+    "standard": "^11.0.1"
   },
   "jest": {
     "testURL": "http://localhost",
