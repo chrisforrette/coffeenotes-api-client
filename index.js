@@ -1,6 +1,6 @@
 import { stringify } from 'querystring'
-import 'fetch-everywhere'
 import curry from 'curry'
+import 'fetch-everywhere'
 
 const { NODE_ENV } = process.env
 
@@ -26,10 +26,10 @@ const defaultOptions = {
   method: 'GET'
 }
 
-export const getRequestOptions = (options = {}, parameters = {}) => {
+export const getRequestOptions = (config = {}, parameters = {}) => {
   const requestOptions = {
     ...defaultOptions,
-    ...options
+    ...config
   }
 
   if (AUTH_TOKEN) {
@@ -54,24 +54,24 @@ export const handleResponse = async response => {
   throw error
 }
 
-export const request = curry(async (options, endpoint, parameters) => {
-  options = options || {}
-  parameters = parameters || {}
-  console.trace()
-  console.log('request', options, endpoint, parameters)
-  const url = `${API_URL}/${endpoint}`
-  const requestOptions = getRequestOptions(options, parameters)
-  const querystringParams = requestOptions.method === 'GET' ? parameters : null
+export const request = (config = {}) => {
+  return curry(async (endpoint, parameters) => {
+    parameters = parameters || {}
 
-  const querystring = stringify(querystringParams)
+    const url = `${API_URL}/${endpoint}`
+    const requestOptions = getRequestOptions(config, parameters)
+    const querystringParams = requestOptions.method === 'GET' ? parameters : null
 
-  const response = await global.fetch(
-    `${url}${querystring ? `?${querystring}` : ''}`,
-    options
-  )
+    const qs = stringify(querystringParams)
 
-  return handleResponse(response)
-})
+    const response = await global.fetch(
+      `${url}${qs ? `?${qs}` : ''}`,
+      requestOptions
+    )
+
+    return handleResponse(response)
+  })
+}
 
 export const get = request({ method: 'GET' })
 export const create = request({ method: 'POST' })

@@ -1,15 +1,14 @@
 {
+  "comments": false,
   "plugins": [
-    ["@babel/plugin-proposal-object-rest-spread", {
-      "loose": true,
-      "useBuiltIns": true
-    }]
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-proposal-object-rest-spread"
   ],
   "presets": [
     ["@babel/preset-env", {
       "targets": {
-        "node": "8",
-        "browsers": ["last 2 versions"]
+        "browsers": ["last 2 versions"],
+        "node": 8
       },
       "modules": false
     }]
