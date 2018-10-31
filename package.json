@@ -1,6 +1,6 @@
 {
   "name": "@coffeenotes/api-client",
-  "version": "0.1.0",
+  "version": "1.0.0-rc1",
   "description": "Coffee Notes API client",
   "main": "dist/cjs.js",
   "module": "dist/es.js",
