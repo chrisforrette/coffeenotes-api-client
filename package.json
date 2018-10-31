@@ -1,0 +1,63 @@
+{
+  "name": "@coffeenotes/api-client",
+  "version": "0.1.0",
+  "description": "Coffee Notes API client",
+  "main": "dist/cjs.js",
+  "module": "dist/es.js",
+  "scripts": {
+    "prepublishOnly": "NODE_ENV=production npm run build",
+    "build": "rollup -c",
+    "lint": "standard | snazzy",
+    "test": "jest",
+    "watch": "NODE_ENV=development rollup -c -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrisforrette/coffeenotes-api-client.git"
+  },
+  "author": "Chris Forrette <chris@chrisforrette.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chrisforrette/coffeenotes-api-client/issues"
+  },
+  "homepage": "https://github.com/chrisforrette/coffeenotes-api-client#readme",
+  "dependencies": {
+    "curry": "^1.2.0",
+    "es6-promise": "^4.2.5",
+    "fetch-everywhere": "^1.0.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/runtime": "^7.1.2",
+    "jest": "^23.6.0",
+    "rollup": "^0.66.6",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-ignore": "^1.0.4",
+    "rollup-plugin-json": "^3.1.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-replace": "^2.1.0",
+    "rollup-plugin-uglify": "^6.0.0",
+    "rollup-plugin-uglify-es": "0.0.1",
+    "snazzy": "^7.1.1",
+    "standard": "^11.0.1"
+  },
+  "jest": {
+    "testURL": "http://localhost",
+    "verbose": false,
+    "coverageThreshold": {
+      "global": {
+        "statements": 95,
+        "branches": 90,
+        "lines": 95,
+        "functions": 90
+      }
+    },
+    "testPathIgnorePatterns": [
+      "dist"
+    ]
+  }
+}
