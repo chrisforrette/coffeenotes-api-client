@@ -1,6 +1,6 @@
 {
   "name": "@coffeenotes/api-client",
-  "version": "1.0.0-rc1",
+  "version": "1.0.0-rc2",
   "description": "Coffee Notes API client",
   "main": "dist/cjs.js",
   "module": "dist/es.js",
@@ -46,7 +46,9 @@
     "standard": "^12.0.1"
   },
   "standard": {
-    "env": ["jest"]
+    "env": [
+      "jest"
+    ]
   },
   "jest": {
     "testURL": "http://localhost",
