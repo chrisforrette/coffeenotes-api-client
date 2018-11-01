@@ -1,5 +1,5 @@
 import { stringify } from 'querystring'
-import curry from 'curry'
+
 import 'fetch-everywhere'
 
 const { NODE_ENV } = process.env
@@ -54,23 +54,19 @@ export const handleResponse = async response => {
   throw error
 }
 
-export const request = (config = {}) => {
-  return curry(async (endpoint, parameters) => {
-    parameters = parameters || {}
+export const request = (config = {}) => async (endpoint, parameters = {}) => {
+  const url = `${API_URL}/${endpoint}`
+  const requestOptions = getRequestOptions(config, parameters)
+  const querystringParams = requestOptions.method === 'GET' ? parameters : null
 
-    const url = `${API_URL}/${endpoint}`
-    const requestOptions = getRequestOptions(config, parameters)
-    const querystringParams = requestOptions.method === 'GET' ? parameters : null
+  const qs = stringify(querystringParams)
 
-    const qs = stringify(querystringParams)
+  const response = await global.fetch(
+    `${url}${qs ? `?${qs}` : ''}`,
+    requestOptions
+  )
 
-    const response = await global.fetch(
-      `${url}${qs ? `?${qs}` : ''}`,
-      requestOptions
-    )
-
-    return handleResponse(response)
-  })
+  return handleResponse(response)
 }
 
 export const get = request({ method: 'GET' })
@@ -82,8 +78,8 @@ export const update = request({ method: 'PUT' })
  * @type {Object}
  */
 export const logs = {
-  list: get('logs'),
-  create: create('logs')
+  list: get.bind(null, 'logs'),
+  create: create.bind(null, 'logs')
 }
 
 /**
@@ -91,9 +87,9 @@ export const logs = {
  * @type {Object}
  */
 export const users = {
-  register: create('users/register'),
-  login: create('users/token'),
-  loginFacebook: create('users/token/facebook')
+  register: create.bind(null, 'users/register'),
+  login: create.bind(null, 'users/token'),
+  loginFacebook: create.bind(null, 'users/token/facebook')
 }
 
 /**
@@ -101,7 +97,7 @@ export const users = {
  * @type {Object}
  */
 export const drinks = {
-  list: get('drinks')
+  list: get.bind(null, 'drinks')
 }
 
 /**
@@ -109,5 +105,5 @@ export const drinks = {
  * @type {Object}
  */
 export const beans = {
-  list: get('beans')
+  list: get.bind(null, 'beans')
 }
