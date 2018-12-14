@@ -38,6 +38,7 @@ jobs:
       # Use NPM_TOKEN env var to auth with NPM
       - run: echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc
       - run: npm install
+      - run: npm run build
       - run: npm publish --access public
       - save_cache:
           name: Save NPM cache
